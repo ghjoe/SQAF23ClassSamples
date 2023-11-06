@@ -48,6 +48,7 @@ namespace HeartRate
             return false;
         }
 
+        // https://www.verywellfit.com/maximum-heart-rate-1231221
         private void CalculateOutputs()
         {
             // determine which formula to use and calculate MHR using this formula
@@ -84,13 +85,13 @@ namespace HeartRate
             }
             else if (Customer.ActivityLevel == ActivityLevel.SPORADIC)
             {
-                Customer.TargetMin = (int)(Customer.MHR * .64);
-                Customer.TargetMax = (int)(Customer.MHR * .74);
+                Customer.TargetMin = (int)(Customer.MHR * .74);
+                Customer.TargetMax = (int)(Customer.MHR * .84);
             }
             else if (Customer.ActivityLevel == ActivityLevel.MINIMAL) 
             {
-                Customer.TargetMin = (int)(Customer.MHR * .74);
-                Customer.TargetMax = (int)(Customer.MHR * .84);
+                Customer.TargetMin = (int)(Customer.MHR * .64);
+                Customer.TargetMax = (int)(Customer.MHR * .74);
             }
             else if (Customer.ActivityLevel == ActivityLevel.REGULAR)
             {
