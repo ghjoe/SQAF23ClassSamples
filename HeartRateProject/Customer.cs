@@ -10,7 +10,7 @@ namespace HeartRate
     {
         SEDENTARY, MINIMAL, SPORADIC, REGULAR, HIGH
     }
-    class Customer
+    public class Customer
     {
         public string FirstName { get; set; }
         public bool IsFemale { get; set; }
@@ -25,5 +25,63 @@ namespace HeartRate
         {
             return $"Name: {FirstName}, Female: {Active}, Age: {Age}, Active: {IsFemale}, Formula: {FormulaType}, MHR: {MHR}, Activity: {ActivityLevel.ToString()}, Min: {TargetMax}; Max: {TargetMin}"; 
         }
+
+        public void CalculateOutputs()
+        {
+            // determine which formula to use and calculate MHR using this formula
+            if (Active)
+            {
+                FormulaType = "Hunt";
+                MHR = (int)(211 - .64 * Age);
+            }
+            else if (IsFemale)
+            {
+                FormulaType = "Gulati";
+                MHR = (int)(206 - .88 * Age);
+            }
+            else if (Age > 40)
+            {
+                FormulaType = "Tanuka";
+                MHR = (int)(208 - .7 * Age);
+            }
+            else
+            {
+                FormulaType = "Fox";
+                MHR = 220 - Age;
+            }
+
+
+            // calculate target heart ranges base on activity level and MHR
+            if (ActivityLevel == ActivityLevel.SEDENTARY)
+            {
+                TargetMin = (int)(MHR * .57);
+                TargetMax = (int)(MHR * .67);
+            }
+            else if (ActivityLevel == ActivityLevel.SPORADIC)
+            {
+                TargetMin = (int)(MHR * .74);
+                TargetMax = (int)(MHR * .84);
+            }
+            else if (ActivityLevel == ActivityLevel.MINIMAL)
+            {
+                TargetMin = (int)(MHR * .64);
+                TargetMax = (int)(MHR * .74);
+            }
+            else if (ActivityLevel == ActivityLevel.REGULAR)
+            {
+                TargetMin = (int)(MHR * .80);
+                TargetMax = (int)(MHR * .91);
+            }
+            else if (ActivityLevel == ActivityLevel.HIGH)
+            {
+                TargetMin = (int)(MHR * .84);
+                TargetMax = (int)(MHR * .84);
+            }
+            else
+            {
+                // error, no activity level chosen
+            }
+        }
+
     }
 }

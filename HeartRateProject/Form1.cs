@@ -51,62 +51,12 @@ namespace HeartRate
         // https://www.verywellfit.com/maximum-heart-rate-1231221
         private void CalculateOutputs()
         {
-            // determine which formula to use and calculate MHR using this formula
-            if (Customer.Active)
-            {
-                Customer.FormulaType = "Hunt";
-                Customer.MHR = (int)(211 - .64 * Customer.Age);
-            }
-            else if (Customer.IsFemale)
-            {
-                Customer.FormulaType = "Galati";
-                Customer.MHR = (int)(206 - .88 * Customer.Age);
-            }
-            else if (Customer.Age > 40)
-            {
-                Customer.FormulaType = "Tanuka";
-                Customer.MHR = (int)(208 - .7 * Customer.Age);
-            }
-            else
-            {
-                Customer.FormulaType = "Fox";
-                Customer.MHR = 220 - Customer.Age;
-            }
+            // calculate target heart ranges base on activity level and MHR
+            Customer.ActivityLevel = (ActivityLevel)activityLevelCB.SelectedIndex;
+            Customer.CalculateOutputs();
 
             // update MHR textbox
             mhrTB.Text = Customer.MHR.ToString();
-
-            // calculate target heart ranges base on activity level and MHR
-            Customer.ActivityLevel = (ActivityLevel)activityLevelCB.SelectedIndex;
-            if (Customer.ActivityLevel == ActivityLevel.SEDENTARY)
-            {
-                Customer.TargetMin = (int)(Customer.MHR * .57);
-                Customer.TargetMax = (int)(Customer.MHR * .67);
-            }
-            else if (Customer.ActivityLevel == ActivityLevel.SPORADIC)
-            {
-                Customer.TargetMin = (int)(Customer.MHR * .74);
-                Customer.TargetMax = (int)(Customer.MHR * .84);
-            }
-            else if (Customer.ActivityLevel == ActivityLevel.MINIMAL) 
-            {
-                Customer.TargetMin = (int)(Customer.MHR * .64);
-                Customer.TargetMax = (int)(Customer.MHR * .74);
-            }
-            else if (Customer.ActivityLevel == ActivityLevel.REGULAR)
-            {
-                Customer.TargetMin = (int)(Customer.MHR * .80);
-                Customer.TargetMax = (int)(Customer.MHR * .91);
-            }
-            else if (Customer.ActivityLevel == ActivityLevel.HIGH)
-            {
-                Customer.TargetMin = (int)(Customer.MHR * .84);
-                Customer.TargetMax = (int)(Customer.MHR * .84);
-            }
-            else
-            {
-                // error, no activity level chosen
-            }
             targetMinTB.Text = Customer.TargetMax.ToString();
             targetMaxTB.Text = Customer.TargetMin.ToString();
         }

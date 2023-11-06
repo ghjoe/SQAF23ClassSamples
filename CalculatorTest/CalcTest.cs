@@ -1,4 +1,5 @@
 using Calculator;
+using System.ComponentModel;
 
 namespace CalculatorTest
 {
@@ -19,16 +20,58 @@ namespace CalculatorTest
         }
 
         [TestMethod]
-        public void CalcTestDivideMethod_OneDividedByOneEqualsOne()
+        [DataRow(1, 1, 1)]
+        [DataRow(100, 10, 10)]
+        [DataRow(10000, 100, 100)]
+        public void CalcTestDivideMethod_DataDrivenDivisions(int dividend, int divisor, int expectedResult)
         {
             // Arrange
             MyCalculator calc = new MyCalculator();
 
             // Act
-            int result = calc.Divide(1, 1);
+            int result = calc.Divide(dividend, divisor);
 
             // Assert
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        //[TestMethod]
+        //public void CalcTestDivideMethod_HundredDividedByTenEqualsTen()
+        //{
+        //    // Arrange
+        //    MyCalculator calc = new MyCalculator();
+
+        //    // Act
+        //    int result = calc.Divide(100, 10);
+
+        //    // Assert
+        //    Assert.AreEqual(10, result);
+        //}
+
+        //[TestMethod]
+        //public void CalcTestDivideMethod_TenThousandDividedByHundredEqualsHundred()
+        //{
+        //    // Arrange
+        //    MyCalculator calc = new MyCalculator();
+
+        //    // Act
+        //    int result = calc.Divide(10000, 100);
+
+        //    // Assert
+        //    Assert.AreEqual(100, result);
+        //}
+
+        [TestMethod]
+        public void CalcTestDivideMethod_OneDividedByZeroThrowsException()
+        {
+            // Arrange
+            MyCalculator calc = new MyCalculator();
+
+            // Act
+            //int result = calc.Divide(1, 0);
+
+            // Assert
+            Assert.ThrowsException<ArgumentException>(() => calc.Divide(1, 0));
         }
     }
 }

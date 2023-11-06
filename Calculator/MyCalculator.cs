@@ -9,8 +9,10 @@ namespace Calculator
     public class MyCalculator
     {
         public int Add(int x, int y) { return x + y; }
-        public int Divide(int divisor, int dividend)
+        public int Divide(int dividend, int divisor)
         {
+            if (divisor == 0)
+                throw new ArgumentException("Divisor argument can't be zero!");
             return dividend / divisor;
         }
     }
