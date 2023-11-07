@@ -13,7 +13,12 @@ namespace Calculator
         {
             if (divisor == 0)
                 throw new ArgumentException("Divisor argument can't be zero!");
-            return dividend / divisor;
+            return dividend/divisor;
+        }
+
+        public int Multiply(int v1, int v2)
+        {
+            return v1 * v2;
         }
     }
 }

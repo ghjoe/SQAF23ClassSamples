@@ -20,6 +20,32 @@ namespace CalculatorTest
         }
 
         [TestMethod]
+        public void CalcTestMultiplyMethod_OneTimesOneEqualsOne()
+        {
+            // Arrange
+            MyCalculator calc = new MyCalculator();
+
+            // Act
+            int result = calc.Multiply(1, 1);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void CalcTestDivideMethod_OneDividedByOne()
+        {
+            // Arrange
+            MyCalculator calculator = new MyCalculator();
+
+            // Act
+            int result = calculator.Divide(1, 1);
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         [DataRow(1, 1, 1)]
         [DataRow(100, 10, 10)]
         [DataRow(10000, 100, 100)]
