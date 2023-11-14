@@ -20,12 +20,15 @@ namespace HeartRate
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            // initialize customer based on GUI
-            Customer = new Customer();
-            UpdateCustomerFromGUI();
+            if (IsCustomerInfoValid())
+            {
+                // initialize customer based on GUI
+                Customer = new Customer();
+                UpdateCustomerFromGUI();
 
-            CalculateOutputs();
-            customerLB.Items.Add(Customer);
+                CalculateOutputs();
+                customerLB.Items.Add(Customer);
+            }
         }
 
         private void UpdateCustomerFromGUI()
@@ -33,19 +36,26 @@ namespace HeartRate
             Customer.FirstName = firstTB.Text;
             Customer.Active = activeCB.Checked;
             Customer.IsFemale = !femaleCB.Checked;
+
             Customer.Age = int.Parse(textBox1.Text);
             Customer.ActivityLevel = (ActivityLevel)activityLevelCB.SelectedIndex;
         }
 
-        private bool ValidationSuccessful()
+        private bool IsCustomerInfoValid()
         {
             // Validate data entered
-            if (firstTB.Text == string.Empty)
+            if (firstTB.Text.Trim() == string.Empty)
             {
                 statusLbl.Text = "Add failed!  Please specify a valid name";
-                return true;
+                return false;
             }
-            return false;
+
+            if (int.TryParse(textBox1.Text, out int value) == false)
+            {
+                statusLbl.Text = "Add failed!  Please specify a valid age";
+                return false;
+            }
+            return true;
         }
 
         // https://www.verywellfit.com/maximum-heart-rate-1231221
